@@ -118,13 +118,13 @@ class BaseClient(object):
         error = dict()
         error['client_class'] = self.__class__.__name__
         error['code'] = status_code
-        error['message'] = json.loads(raw_response.content)['Error']
+        error['message'] = json.loads(raw_response.text)['Error']
 
         return error
 
     def parse_raw_response(self, raw_response):
 
         if raw_response.status_code == 200:
-            return json.loads(make_str_content(raw_response.content))
+            return json.loads(make_str_content(raw_response.text))
         else:
             return self.__handle_error(raw_response)
